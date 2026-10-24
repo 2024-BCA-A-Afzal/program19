@@ -1,3 +1,4 @@
+
 name: Deploy Program 19 to GitHub Pages
 
 on:
@@ -10,6 +11,10 @@ permissions:
   contents: read
   pages: write
   id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -25,18 +30,18 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        run: |
-          if [ -f package.json ]; then
-            npm install
-          fi
+        run: npm install
 
-      - name: Build Project
-        run: |
-          if [ -f package.json ]; then
-            npm run build --if-present
-          fi
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
-      - name: Deploy to GitHub Pages
+      - name: Build React App
+        run: npm run build
+
+      - name: Upload Build Folder
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: ./build
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
