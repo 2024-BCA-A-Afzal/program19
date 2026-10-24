@@ -1,13 +1,12 @@
+
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
 
 test("Home page is displayed initially", () => {
   window.history.pushState({}, "", "/");
   render(<App />);
-
   expect(
     screen.getByRole("heading", { name: /home/i })
   ).toBeInTheDocument();
@@ -16,18 +15,16 @@ test("Home page is displayed initially", () => {
 test("Home page displays a student image", () => {
   window.history.pushState({}, "", "/");
   render(<App />);
-
   expect(
     screen.getByRole("img", { name: /student/i })
   ).toBeInTheDocument();
 });
 
-test("About page opens using navigation", async () => {
+test("About page opens using navigation", () => {
   window.history.pushState({}, "", "/");
-  const user = userEvent.setup();
   render(<App />);
 
-  await user.click(
+  fireEvent.click(
     screen.getByRole("link", { name: /about/i })
   );
 
