@@ -1,6 +1,6 @@
+
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
 
@@ -22,12 +22,11 @@ test("Home page displays a student image", () => {
   ).toBeInTheDocument();
 });
 
-test("About page opens using navigation", async () => {
+test("About page opens using navigation", () => {
   window.history.pushState({}, "", "/");
-  const user = userEvent.setup();
   render(<App />);
 
-  await user.click(
+  fireEvent.click(
     screen.getByRole("link", { name: /about/i })
   );
 
