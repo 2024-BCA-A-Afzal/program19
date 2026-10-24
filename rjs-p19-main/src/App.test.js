@@ -7,7 +7,6 @@ import App from "./App";
 test("Home page is displayed initially", () => {
   window.history.pushState({}, "", "/");
   render(<App />);
-
   expect(
     screen.getByRole("heading", { name: /home/i })
   ).toBeInTheDocument();
@@ -16,7 +15,6 @@ test("Home page is displayed initially", () => {
 test("Home page displays a student image", () => {
   window.history.pushState({}, "", "/");
   render(<App />);
-
   expect(
     screen.getByRole("img", { name: /student/i })
   ).toBeInTheDocument();
